@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <title>Sign in</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<style>
+    body{
+        background-color: #F5F5F5
+    }
+    .centercontainer {
+        width: 100%;
+        margin-top: calc(50vh - 500px / 2);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .formStyle{
+        width: 500px;
+    }
+</style>
+
+<script>
+
+    function onPageLoad() {
+        fetch('/validate', {
+            credentials: 'same-origin',
+            method: 'POST',
+            body: {},
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((resp) => resp.json())
+            .then(function (data) {
+                console.log(JSON.stringify(data));
+                var form = document.getElementById("form");
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "_csrf";
+                input.value = data.csrfToken;
+                form.appendChild(input);
+            })
+    }
+</script>
+
+<body onload="onPageLoad()">
+
+    <div class="container">
+        <h2 class="display-4 text-center mt-5">Synchronizer Token Pattern</h2>
+        <div class="card centercontainer formStyle">
+            <div class="card-body ">
+                <form id="form" action="/login" method="POST">
+                    <div class="form-group">
+                        <label for="emailId">Email address</label>
+                        <input type="email" class="form-control" id="emailId" placeholder="john@doe.com" name="email"
+                            value="john@doe.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordId">Password</label>
+                        <input type="password" class="form-control" id="passwordId" placeholder="Password" name="password"
+                            value="1234567890">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
