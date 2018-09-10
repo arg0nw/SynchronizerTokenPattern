@@ -13,7 +13,7 @@ app.use(session({
         return uuid
     },
     name: 'SESS_ID',
-    secret: '^#$5sX(Hf6KUo!#65^',
+    secret: '0dfg#4df!8*4^l]&fg',
     resave: false,
     saveUninitialized: false
 }))
